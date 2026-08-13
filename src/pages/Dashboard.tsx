@@ -6,13 +6,13 @@ import { PageHeader, Card, Avatar, StatCard, SkeletonMetricGrid, Skeleton, Skele
 
 export function DashboardPage() {
   const [loading, setLoading] = useState(true);
-  const [data, setData] = useState({
+  const [data, setData] = useState(() => ({
     stats: api.getDashboardStats(),
     popularTopics: api.getPopularTopics(8),
     connectedResearchers: api.getMostConnectedResearchers(6),
     citedPapers: api.getMostCitedPapers(5),
     activity: api.getActivityByYear(),
-  });
+  }));
 
   useEffect(() => {
     let isMounted = true;

@@ -42,10 +42,19 @@ function ensureSeeded(): void {
 }
 ensureSeeded();
 
+const API_BASE =
+//  true?
+  "https://research-graph.onrender.com/api"
+  // : "/api";
+
+function fetchApi(endpoint: string): Promise<Response> {
+  return fetch(`${API_BASE}${endpoint}`);
+}
+
 // Helper for API fetch
 async function apiFetch<T>(endpoint: string, fallbackFn: () => T): Promise<T> {
   try {
-    const res = await fetch(`/api${endpoint}`);
+    const res = await fetchApi(endpoint);
     if (!res.ok) {
       throw new Error(`HTTP ${res.status}`);
     }
@@ -75,7 +84,6 @@ export const api = {
 
   getDashboardStats(): DashboardStats {
     // Fire real network fetch in background to warm proxy/logs
-    fetch("/api/dashboard").catch(() => {});
     return {
       papers: getNodesByType("Paper").length,
       researchers: getNodesByType("Researcher").length,
@@ -203,7 +211,6 @@ export const api = {
     if (params.year) q.set("year", String(params.year));
     if (params.topic) q.set("topic", params.topic);
     if (params.page) q.set("page", String(params.page));
-    fetch(`/api/papers?${q.toString()}`).catch(() => {});
 
     let items = getNodesByType("Paper");
     if (params.search) {
@@ -248,7 +255,6 @@ export const api = {
   },
 
   getPaper(id: string): GraphNode | null {
-    fetch(`/api/papers/${id}`).catch(() => {});
     return getNode(id) || null;
   },
 
@@ -269,7 +275,6 @@ export const api = {
   },
 
   getPaperCitations(id: string): { cites: GraphNode[]; citedBy: GraphNode[] } {
-    fetch(`/api/papers/${id}/citations`).catch(() => {});
     return {
       cites: getConnectedNodes(id, "CITES", "outgoing"),
       citedBy: getConnectedNodes(id, "CITES", "incoming"),
@@ -277,12 +282,10 @@ export const api = {
   },
 
   getRelatedPapers(id: string): RelatedPaper[] {
-    fetch(`/api/papers/${id}/related`).catch(() => {});
     return getRelatedPapers(id).slice(0, 10);
   },
 
   getPaperLineage(id: string, depth: number = 5): GraphData {
-    fetch(`/api/papers/${id}/lineage?depth=${depth}`).catch(() => {});
     return getCitationLineage(id, depth);
   },
 
@@ -315,7 +318,6 @@ export const api = {
     if (params.search) q.set("search", params.search);
     if (params.institution) q.set("institution", params.institution);
     if (params.page) q.set("page", String(params.page));
-    fetch(`/api/researchers?${q.toString()}`).catch(() => {});
 
     let items = getNodesByType("Researcher");
     if (params.search) {
@@ -352,7 +354,6 @@ export const api = {
   },
 
   getResearcher(id: string): GraphNode | null {
-    fetch(`/api/researchers/${id}`).catch(() => {});
     return getNode(id) || null;
   },
 
@@ -361,12 +362,10 @@ export const api = {
   },
 
   getResearcherCollaborators(id: string): GraphNode[] {
-    fetch(`/api/researchers/${id}/collaborators`).catch(() => {});
     return getCollaborators(id);
   },
 
   getResearcherCollaborationGraph(id: string): GraphData {
-    fetch(`/api/researchers/${id}/collaboration-graph`).catch(() => {});
     return getCollaborationGraph(id, 2);
   },
 
@@ -423,12 +422,10 @@ export const api = {
   },
 
   getTopics(): GraphNode[] {
-    fetch("/api/topics").catch(() => {});
     return getNodesByType("Topic").sort((a, b) => getPaperCountForTopic(b.id) - getPaperCountForTopic(a.id));
   },
 
   getTopic(id: string): GraphNode | null {
-    fetch(`/api/topics/${id}`).catch(() => {});
     return getNode(id) || null;
   },
 
@@ -468,7 +465,6 @@ export const api = {
   },
 
   getTopicGraph(id: string, depth: number = 2): GraphData {
-    fetch(`/api/topics/${id}`).catch(() => {});
     return getTopicGraph(id, depth);
   },
 
@@ -500,12 +496,10 @@ export const api = {
   },
 
   getInstitutions(): GraphNode[] {
-    fetch("/api/institutions").catch(() => {});
     return getNodesByType("Institution").sort((a, b) => a.label.localeCompare(b.label));
   },
 
   getInstitution(id: string): GraphNode | null {
-    fetch(`/api/institutions/${id}`).catch(() => {});
     return getNode(id) || null;
   },
 
@@ -532,7 +526,6 @@ export const api = {
   },
 
   getInstitutionCollaborations(id: string): GraphData {
-    fetch(`/api/institutions/${id}`).catch(() => {});
     return getCrossInstitutionCollaborations(id);
   },
 
@@ -542,7 +535,6 @@ export const api = {
   },
 
   getMethods(): GraphNode[] {
-    fetch("/api/methods").catch(() => {});
     return getNodesByType("Method").sort((a, b) => a.label.localeCompare(b.label));
   },
 
@@ -551,7 +543,6 @@ export const api = {
   },
 
   getDatasets(): GraphNode[] {
-    fetch("/api/datasets").catch(() => {});
     return getNodesByType("Dataset").sort((a, b) => a.label.localeCompare(b.label));
   },
 
@@ -567,7 +558,6 @@ export const api = {
     nodeTypes?: NodeType[],
     relTypes?: RelationshipType[]
   ): GraphData {
-    fetch(`/api/graph/${type}/${id}?depth=${depth}`).catch(() => {});
     return getNeighborhood(id, depth, nodeTypes, relTypes);
   },
 
@@ -580,7 +570,6 @@ export const api = {
   },
 
   findPath(startId: string, endId: string): GraphPath | null {
-    fetch(`/api/graph/path?startId=${startId}&targetId=${endId}`).catch(() => {});
     return findShortestPath(startId, endId);
   },
 
@@ -602,12 +591,10 @@ export const api = {
   },
 
   search(query: string): { type: NodeType; items: GraphNode[] }[] {
-    fetch(`/api/search?q=${encodeURIComponent(query)}`).catch(() => {});
     return localSearch(query);
   },
 
   getSearchResults(query: string): SearchResult[] {
-    fetch(`/api/search?q=${encodeURIComponent(query)}`).catch(() => {});
     const results = localSearch(query);
     return results.flatMap((group) =>
       group.items.map((node) => ({
@@ -624,7 +611,6 @@ export const api = {
   },
 
   getAllEntities(): { type: NodeType; items: { id: string; label: string }[] }[] {
-    fetch("/api/graph/entities").catch(() => {});
     const types: NodeType[] = ["Researcher", "Paper", "Topic", "Institution", "Method", "Dataset"];
     return types.map((type) => ({
       type,
