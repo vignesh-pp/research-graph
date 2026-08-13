@@ -104,7 +104,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
                   key={label}
                   to={path}
                   onClick={() => setMobileOpen(false)}
-                  className={({ isActive }) => `nav-item ${isActive ? "active" : ""}`}
+                  className={({ isActive }) => {
+                    const isDashboardRoot = path === "/dashboard" && location.pathname === "/";
+                    return `nav-item ${isActive || isDashboardRoot ? "active" : ""}`;
+                  }}
                   title={collapsed ? label : undefined}
                 >
                   <Icon size={18} strokeWidth={2} />
