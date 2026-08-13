@@ -326,3 +326,12 @@ npm run build
 ## 10. License
 
 MIT License. Developed for the Wexa AI CognoDB take-home assignment.
+![alt text](image.png)
+![alt text](image-1.png)
+![alt text](image-2.png)
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
+![alt text](image-6.png)
+![alt text](image-7.png)
+![alt text](image-8.png)
