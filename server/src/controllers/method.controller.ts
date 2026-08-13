@@ -14,7 +14,7 @@ export async function getMethods(req: Request, res: Response, next: NextFunction
 
 export async function getMethodById(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const method = await methodRepo.findById(id);
     if (!method) {
       res.status(404).json({ success: false, error: { message: `Method with ID '${id}' not found.` } });

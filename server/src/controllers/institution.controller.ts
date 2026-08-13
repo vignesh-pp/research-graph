@@ -14,7 +14,7 @@ export async function getInstitutions(req: Request, res: Response, next: NextFun
 
 export async function getInstitutionById(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const data = await institutionService.getInstitutionDetails(id);
     if (!data) {
       res.status(404).json({ success: false, error: { message: `Institution with ID '${id}' not found.` } });

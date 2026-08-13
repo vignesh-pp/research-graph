@@ -6,7 +6,8 @@ const graphService = new GraphService();
 
 export async function getNeighborhood(req: Request, res: Response, next: NextFunction) {
   try {
-    const { type, id } = req.params;
+    const { type } = req.params;
+    const id = req.params.id as string;
     const depth = req.query.depth ? parseInt(req.query.depth as string, 10) : 1;
     const data = await graphService.getNeighborhood(type as NodeType, id, depth);
     res.json({ success: true, data });

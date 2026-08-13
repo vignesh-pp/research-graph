@@ -21,7 +21,7 @@ export async function getResearchers(req: Request, res: Response, next: NextFunc
 
 export async function getResearcherById(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const data = await researcherService.getResearcherDetails(id);
     if (!data) {
       res.status(404).json({ success: false, error: { message: `Researcher with ID '${id}' not found.` } });
@@ -35,7 +35,7 @@ export async function getResearcherById(req: Request, res: Response, next: NextF
 
 export async function getResearcherCollaborators(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const collaborators = await researcherService.getCollaborators(id);
     res.json({ success: true, data: collaborators });
   } catch (err) {
@@ -45,7 +45,7 @@ export async function getResearcherCollaborators(req: Request, res: Response, ne
 
 export async function getResearcherCollaborationGraph(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const graph = await researcherService.getCollaborationGraph(id);
     res.json({ success: true, data: graph });
   } catch (err) {

@@ -23,7 +23,7 @@ export async function getPapers(req: Request, res: Response, next: NextFunction)
 
 export async function getPaperById(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const data = await paperService.getPaperDetails(id);
     if (!data) {
       res.status(404).json({ success: false, error: { message: `Paper with ID '${id}' not found.` } });
@@ -37,7 +37,7 @@ export async function getPaperById(req: Request, res: Response, next: NextFuncti
 
 export async function getPaperRelated(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 6;
     const related = await paperService.getRelatedPapers(id, limit);
     res.json({ success: true, data: related });
@@ -48,7 +48,7 @@ export async function getPaperRelated(req: Request, res: Response, next: NextFun
 
 export async function getPaperLineage(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const depth = req.query.depth ? parseInt(req.query.depth as string, 10) : 3;
     const lineage = await paperService.getPaperLineage(id, depth);
     res.json({ success: true, data: lineage });
@@ -59,7 +59,7 @@ export async function getPaperLineage(req: Request, res: Response, next: NextFun
 
 export async function getPaperCitations(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const citations = await paperService.getPaperCitations(id);
     res.json({ success: true, data: citations });
   } catch (err) {

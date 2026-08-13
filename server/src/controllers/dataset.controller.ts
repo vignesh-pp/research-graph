@@ -14,7 +14,7 @@ export async function getDatasets(req: Request, res: Response, next: NextFunctio
 
 export async function getDatasetById(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const dataset = await datasetRepo.findById(id);
     if (!dataset) {
       res.status(404).json({ success: false, error: { message: `Dataset with ID '${id}' not found.` } });

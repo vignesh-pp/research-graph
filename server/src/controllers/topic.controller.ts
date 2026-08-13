@@ -14,7 +14,7 @@ export async function getTopics(req: Request, res: Response, next: NextFunction)
 
 export async function getTopicById(req: Request, res: Response, next: NextFunction) {
   try {
-    const { id } = req.params;
+    const id = req.params.id as string;
     const data = await topicService.getTopicDetails(id);
     if (!data) {
       res.status(404).json({ success: false, error: { message: `Topic with ID '${id}' not found.` } });
