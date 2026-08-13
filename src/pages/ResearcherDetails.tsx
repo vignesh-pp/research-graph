@@ -179,7 +179,7 @@ export function ResearcherDetailsPage() {
                   return (
                     <Link key={p.id} to={`/papers/${p.id}`} className="section-list-item">
                       <FileText size={15} style={{ color: "#2563eb" }} />
-                      <div style={{ flex: 1 }}>
+                      <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontWeight: 600, fontSize: "13px", color: "#0f172a" }}>{p.label}</div>
                         <div style={{ fontSize: "11px", color: "#94a3b8" }}>{pProps.publicationYear} · {pProps.venue}</div>
                       </div>
@@ -237,7 +237,7 @@ export function ResearcherDetailsPage() {
                 return (
                   <Link key={c.id} to={`/researchers/${c.id}`} className="section-list-item">
                     <Avatar name={c.label} />
-                    <div style={{ flex: 1 }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontWeight: 600, fontSize: "13px", color: "#0f172a" }}>{c.label}</div>
                       <div style={{ fontSize: "11px", color: "#64748b" }}>{cInst?.label || "Independent"}</div>
                     </div>

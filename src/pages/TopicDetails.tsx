@@ -173,7 +173,7 @@ export function TopicDetailsPage() {
                   return (
                     <Link key={p.id} to={`/papers/${p.id}`} className="section-list-item">
                       <FileText size={16} style={{ color: "#2563eb", flexShrink: 0 }} />
-                      <div style={{ flex: 1 }}>
+                      <div style={{ flex: 1, minWidth: 0 }}>
                         <div className="item-title">{p.label}</div>
                         <div style={{ fontSize: "11px", color: "#94a3b8" }}>{pProps.publicationYear} · {pProps.venue}</div>
                       </div>

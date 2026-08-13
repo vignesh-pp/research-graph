@@ -136,7 +136,7 @@ export function MethodsPage() {
                   <div style={{ fontSize: "11px", fontWeight: 700, color: "#94a3b8", textTransform: "uppercase", marginBottom: "6px" }}>
                     Papers using this method:
                   </div>
-                  <div style={{ display: "grid", gap: "4px" }}>
+                  <div style={{ display: "grid", gap: "4px", minWidth: 0 }}>
                     {papers.slice(0, 3).map((p) => (
                       <Link
                         key={p.id}
@@ -149,6 +149,7 @@ export function MethodsPage() {
                           color: "#2563eb",
                           textDecoration: "none",
                           padding: "3px 0",
+                          minWidth: 0,
                         }}
                       >
                         <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginRight: "8px" }}>

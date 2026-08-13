@@ -454,6 +454,7 @@ button {
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
   transition: box-shadow 0.2s ease, border-color 0.2s ease;
+  min-width: 0;
 }
 
 .card:hover {
@@ -689,7 +690,7 @@ button {
 /* === Detail Grid === */
 .detail-grid {
   display: grid;
-  grid-template-columns: 1fr 320px;
+  grid-template-columns: minmax(0, 1fr) 320px;
   gap: 18px;
   margin-top: 16px;
 }
@@ -1326,3 +1327,87 @@ button {
     grid-template-columns: 1fr;
   }
 }
+
+/* === Section List Items === */
+.section-list-item {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  text-decoration: none;
+  color: inherit;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+  min-width: 0;
+  margin-bottom: 4px;
+  border: 1px solid transparent;
+}
+
+.section-list-item:hover {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.section-list-item .item-title,
+.section-list-item div > .item-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* === Table Pagination === */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-top: 1px solid #f1f5f9;
+  background-color: #fff;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.page-buttons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-button {
+  background-color: #fff;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s ease;
+}
+
+.page-button:hover:not(:disabled) {
+  background-color: #f8fafc;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+.page-button.active {
+  background-color: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+.page-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
